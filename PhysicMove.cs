@@ -11,6 +11,7 @@ public class PhysicMove : MonoBehaviour
     private bool isOnground;
     public Text txtScore;
     int score;
+    public bool isDead = false;
     // Start is called before the first frame update
     void Start()
     {
