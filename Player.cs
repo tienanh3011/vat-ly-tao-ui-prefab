@@ -33,14 +33,27 @@ public class Player : MonoBehaviour
             rigi.velocity = new Vector2(speedRun, rigi.velocity.y);
            // rigi.AddForce(new Vector2(speedRun, 0), ForceMode2D.Impulse);
         }
+
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             rigi.velocity = new Vector2(-speedRun, rigi.velocity.y);
            // rigi.AddForce(new Vector2(-speedRun, 0));
         }
-        if(Input.GetKeyDown(KeyCode.UpArrow)&& isOnground)
+        if(Input.GetKeyDown(KeyCode.LeftArrow)||Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            GameHelper.instance.SoundController.PlaySound(SoundName.Walk1, true);
+
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            GameHelper.instance.SoundController.PlaySound(SoundName.Walk1);
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow)&& isOnground)
         {
             rigi.AddForce(Vector2.up*forceJump, ForceMode2D.Impulse);
+            GameHelper.instance.SoundController.PlaySound(SoundName.jump, false);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -54,6 +67,7 @@ public class Player : MonoBehaviour
                 highscore = score;
                 PlayerPrefs.SetInt("highscore", highscore);
             }
+            GameHelper.instance.SoundController.PlaySound(SoundName.Collect, false);
             txtScore.text = "Score : " + score;
         }
     }
@@ -63,6 +77,7 @@ public class Player : MonoBehaviour
         if(collision.gameObject.CompareTag("Ground"))
         {
             isOnground = true;
+            GameHelper.instance.SoundController.PlaySound(SoundName.LandOnGround, false);
         }
         
 
